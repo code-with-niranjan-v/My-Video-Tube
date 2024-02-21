@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/almostBlack"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".StartFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintDimensionRatio="3:1"
+            app:layout_constraintVertical_bias="1"
+            android:src="@drawable/baseline_smart_display_24"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/imgLogo"
+            app:layout_constraintBottom_toTopOf="@+id/tvAppName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:padding="12dp"
+            android:layout_margin="8dp"
+            android:textStyle="italic"
+            android:fontFamily="casual"
+            app:layout_constraintVertical_weight="2"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/imgLogo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvTagline"
+            android:text="MyVideo Tube"
+            android:id="@+id/tvAppName"/>
+
+        <TextView
+            android:padding="12dp"
+            android:layout_margin="8dp"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:maxLines="2"
+            android:textStyle="italic"
+            android:fontFamily="cursive"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/tvAppName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
+            android:text="@string/tagline"
+            android:id="@+id/tvTagline"/>
+
+        <LinearLayout
+            android:id="@+id/cardView"
+            android:background="@drawable/cardviewbg"
+            app:cardElevation="8dp"
+            app:layout_constraintVertical_weight="2"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTagline"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_margin="8dp"
+                android:layout_height="match_parent">
+                <Button
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:padding="12dp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@id/btnLogIn"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnGetStarted"
+                    android:text="Get Started"/>
+
+                <Button
+
+                    app:layout_constraintTop_toBottomOf="@+id/btnGetStarted"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:padding="12dp"
+                    android:id="@+id/btnLogIn"
+                    android:backgroundTint="@color/almostBlack"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="wrap_content"
+                    android:text="Log In"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

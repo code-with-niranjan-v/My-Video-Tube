@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/almostBlack"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/imgLogo"
+            app:layout_constraintDimensionRatio="3:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintBottom_toTopOf="@id/tvAppName"
+            android:src="@drawable/baseline_smart_display_24"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MyVideo Tube"
+            android:padding="18dp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="24sp"
+            android:id="@+id/tvAppName"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/imgLogo"
+            android:fontFamily="casual"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="8dp"
+            android:id="@+id/topCard"
+            android:background="@drawable/cardviewbg"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create an Account"
+                android:textColor="@color/white"
+                android:padding="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/etEmail"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/tvCreate"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvCreate"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="18dp"
+                android:layout_margin="12dp"
+                android:hint="Email"
+                app:layout_constraintBottom_toTopOf="@+id/etChannleName"
+                android:id="@+id/etEmail"
+                android:background="@drawable/edit_txt_bg"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/etEmail"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="18dp"
+                android:id="@+id/etChannleName"
+                android:layout_margin="12dp"
+                android:hint="Channel Name"
+                app:layout_constraintBottom_toTopOf="@+id/etPassword"
+                android:background="@drawable/edit_txt_bg"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/etChannleName"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="18dp"
+                android:id="@+id/etPassword"
+                android:layout_margin="12dp"
+                android:hint="Password"
+                app:layout_constraintBottom_toTopOf="@+id/etConfirm"
+                android:background="@drawable/edit_txt_bg"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/etPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="18dp"
+                android:layout_margin="12dp"
+                android:hint="Confirm Password"
+                android:id="@+id/etConfirm"
+                app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+                android:background="@drawable/edit_txt_bg"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <Button
+                app:layout_constraintBottom_toTopOf="@+id/tvAlready"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/etConfirm"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="18dp"
+                android:layout_margin="12dp"
+                android:text="Submit"
+                android:id="@+id/btnSubmit"
+                android:textSize="20sp"
+                android:backgroundTint="@color/almostBlack"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvAlready"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:paddingBottom="10dp"
+                android:text="Already have an account? Log in"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
