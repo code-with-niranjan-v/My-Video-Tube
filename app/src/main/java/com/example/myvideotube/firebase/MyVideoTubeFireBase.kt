@@ -12,4 +12,6 @@ class MyVideoTubeFireBase @Inject constructor(
         firebaseAuth.createUserWithEmailAndPassword(email,password)
     }
 
+    fun signIn(email: String,password: String) = firebaseAuth.signInWithEmailAndPassword(email, password)
+
 }

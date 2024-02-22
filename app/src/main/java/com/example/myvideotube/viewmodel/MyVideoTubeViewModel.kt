@@ -2,6 +2,8 @@ package com.example.myvideotube.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.myvideotube.firebase.MyVideoTubeFireBase
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -19,5 +21,8 @@ class MyVideoTubeViewModel @Inject constructor(
             firebase.createUserWithPassword(email, password)
         }
     }
+
+    fun signIn(email: String,password: String) = firebase.signIn(email, password)
+
 
 }
