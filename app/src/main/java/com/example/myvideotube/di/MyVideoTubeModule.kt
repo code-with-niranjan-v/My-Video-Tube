@@ -3,7 +3,12 @@ package com.example.myvideotube.di
 import com.example.myvideotube.firebase.MyVideoTubeFireBase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.google.firestore.v1.FirestoreGrpc.FirestoreImplBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +25,14 @@ class MyVideoTubeModule {
 
     @Provides
     @Singleton
-    fun provideFireBase(firebaseAuth: FirebaseAuth):MyVideoTubeFireBase = MyVideoTubeFireBase(firebaseAuth)
+    fun provideFireBaseStoreDb():FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    @Singleton
+    fun provideFireBaseStorage():FirebaseStorage = Firebase.storage
+
+    @Provides
+    @Singleton
+    fun provideFireBase(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore,firebaseStorage: FirebaseStorage):MyVideoTubeFireBase = MyVideoTubeFireBase(firebaseAuth,firestore,firebaseStorage)
 
 }

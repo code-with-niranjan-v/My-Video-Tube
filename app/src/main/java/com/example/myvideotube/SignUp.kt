@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.example.myvideotube.data.User
 import com.example.myvideotube.databinding.FragmentSignUpBinding
 import com.example.myvideotube.viewmodel.MyVideoTubeViewModel
 import dagger.hilt.EntryPoint
@@ -37,7 +38,8 @@ class SignUp : Fragment() {
 
             if(email.isNotBlank() && channelName.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()){
                 if(password.equals(confirmPassword)){
-                    myVideoTubeViewModel.createUserWithPassword(email, password)
+                    val user = User(channelName,"",email,null,null,null)
+                    myVideoTubeViewModel.createUserWithPassword(email, password,user)
                 }
             }else{
                 Toast.makeText(context,"Blank Fields are not allowed",Toast.LENGTH_SHORT).show()
