@@ -51,6 +51,14 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
 
+    //    Navigation Component
+    val nav_version = "2.7.4"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+//    Activity and Fragment
+    implementation("androidx.fragment:fragment-ktx:1.6.1")
+    implementation("androidx.activity:activity-ktx:1.7.0")
+
     //ViewModel & LiveData & Annotation Processor
     val lifecycle_version = "2.6.2"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")

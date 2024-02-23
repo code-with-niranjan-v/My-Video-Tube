@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homenavigation"
+    app:startDestination="@id/videoFragment2">
+
+    <fragment
+        android:id="@+id/videoFragment2"
+        android:name="com.example.myvideotube.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" >
+        <action
+            android:id="@+id/action_videoFragment2_to_videoViewFragment2"
+            app:destination="@id/videoViewFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoViewFragment2"
+        android:name="com.example.myvideotube.VideoViewFragment"
+        android:label="fragment_video_view"
+        tools:layout="@layout/fragment_video_view" />
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.example.myvideotube.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/uploadFragment2"
+        android:name="com.example.myvideotube.UploadFragment"
+        android:label="fragment_upload"
+        tools:layout="@layout/fragment_upload" />
+    <fragment
+        android:id="@+id/settingsFragment2"
+        android:name="com.example.myvideotube.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

@@ -37,37 +37,8 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_videoFragment"
-            app:destination="@id/videoFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_uploadFragment"
-            app:destination="@id/uploadFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            android:id="@+id/action_homeFragment_to_homenavigation"
+            app:destination="@id/homenavigation" />
     </fragment>
-    <fragment
-        android:id="@+id/videoFragment"
-        android:name="com.example.myvideotube.VideoFragment"
-        android:label="fragment_video"
-        tools:layout="@layout/fragment_video" >
-        <action
-            android:id="@+id/action_videoFragment_to_videoViewFragment"
-            app:destination="@id/videoViewFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/uploadFragment"
-        android:name="com.example.myvideotube.UploadFragment"
-        android:label="fragment_upload"
-        tools:layout="@layout/fragment_upload" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.myvideotube.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/videoViewFragment"
-        android:name="com.example.myvideotube.VideoViewFragment"
-        android:label="fragment_video_view"
-        tools:layout="@layout/fragment_video_view" />
+    <include app:graph="@navigation/homenavigation" />
 </navigation>

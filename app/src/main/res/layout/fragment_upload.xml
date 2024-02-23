@@ -3,12 +3,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/almostBlack"
     tools:context=".UploadFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/clouduploading"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintDimensionRatio="3:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/imgUpload"
+            app:layout_constraintBottom_toTopOf="@id/btnUploadVideo"
+            app:layout_constraintTop_toBottomOf="@id/btnUploadVideo"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnUploadVideo"
+            android:text="Select Video"
+            android:textSize="24sp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/btnUploadThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/imgUpload"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            app:layout_constraintBottom_toTopOf="@id/etTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnUploadThumbnail"
+            android:text="Select Thumbnail"
+            android:textSize="24sp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_margin="12dp"
+            app:layout_constraintTop_toBottomOf="@id/btnUploadVideo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <EditText
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnUploadThumbnail"
+            android:textSize="18sp"
+            android:id="@+id/etTitle"
+            app:layout_constraintBottom_toTopOf="@id/etDescription"
+            android:layout_margin="16dp"
+            android:textColorHint="@color/grey"
+            android:padding="12dp"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:hint="Title"/>
+
+
+        <EditText
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/etDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etTitle"
+            android:textSize="18sp"
+            android:background="@drawable/dash_border"
+            android:gravity="start|top"
+            app:layout_constraintVertical_weight="4"
+            android:layout_margin="16dp"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:textColorHint="@color/grey"
+            android:padding="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnUpload"
+            android:hint="Description"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnUpload"
+            android:layout_margin="12dp"
+            app:layout_constraintTop_toBottomOf="@id/etDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:text="Upload"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

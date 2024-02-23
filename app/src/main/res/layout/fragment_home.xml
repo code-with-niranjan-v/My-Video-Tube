@@ -7,5 +7,56 @@
     android:background="@color/almostBlack"
     tools:context=".HomeFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/frameLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <fragment
+                android:id="@+id/homeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/homenavigation"
+                android:name="androidx.navigation.fragment.NavHostFragment"/>
+
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/line"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            android:background="@color/almostBlack"
+            app:itemTextAppearanceActive="@color/white"
+            app:itemTextAppearanceInactive="@color/grey"
+            app:itemActiveIndicatorStyle="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:labelVisibilityMode="labeled"
+            android:id="@+id/bottomNavigation"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>
