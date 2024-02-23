@@ -1,8 +1,11 @@
 package com.example.myvideotube.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.example.myvideotube.data.User
+import com.example.myvideotube.data.Video
 import com.example.myvideotube.firebase.MyVideoTubeFireBase
+import com.example.myvideotube.repository.MyVideoTubeRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -14,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyVideoTubeViewModel @Inject constructor(
-    private val firebase:MyVideoTubeFireBase
+    private val firebase:MyVideoTubeFireBase,
+    private val repo:MyVideoTubeRepository
 ):ViewModel(){
 
     fun createUserWithPassword(email:String,password:String,user: User){
@@ -24,6 +28,12 @@ class MyVideoTubeViewModel @Inject constructor(
     }
 
     fun signIn(email: String,password: String) = firebase.signIn(email, password)
+
+    fun uploadVideoAndImage(videoData: Video, selectedVideo: Uri, selectedPhoto: Uri){
+        CoroutineScope(Dispatchers.IO).launch{
+            repo.uploadVideoAndImage(videoData, selectedVideo, selectedPhoto)
+        }
+    }
 
 
 }

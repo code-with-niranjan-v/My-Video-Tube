@@ -1,6 +1,7 @@
 package com.example.myvideotube.di
 
 import com.example.myvideotube.firebase.MyVideoTubeFireBase
+import com.example.myvideotube.repository.MyVideoTubeRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,5 +35,9 @@ class MyVideoTubeModule {
     @Provides
     @Singleton
     fun provideFireBase(firebaseAuth: FirebaseAuth,firestore: FirebaseFirestore,firebaseStorage: FirebaseStorage):MyVideoTubeFireBase = MyVideoTubeFireBase(firebaseAuth,firestore,firebaseStorage)
+
+    @Provides
+    @Singleton
+    fun provideRepo(fireBase: MyVideoTubeFireBase):MyVideoTubeRepository = MyVideoTubeRepository(fireBase)
 
 }

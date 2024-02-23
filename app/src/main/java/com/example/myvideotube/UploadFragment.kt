@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import com.example.myvideotube.data.Video
 import com.example.myvideotube.databinding.FragmentUploadBinding
+import com.example.myvideotube.viewmodel.MyVideoTubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.UUID
 
 @AndroidEntryPoint
 class UploadFragment : Fragment() {
@@ -18,6 +22,7 @@ class UploadFragment : Fragment() {
     private lateinit var uploadBinding: FragmentUploadBinding
     private lateinit var selectedVideo: Uri
     private lateinit var selectedPhoto: Uri
+    private val viewModel:MyVideoTubeViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +54,19 @@ class UploadFragment : Fragment() {
             pickVideo.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
         }
         uploadBinding.btnUploadThumbnail.setOnClickListener {
-            pickVideo.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            pickPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
+        uploadBinding.btnUpload.setOnClickListener {
+            val title = uploadBinding.etTitle.text.toString()
+            val description = uploadBinding.etDescription.text.toString()
+            val videoID = UUID.randomUUID().toString()
+            val video = Video(title,description,videoID,null,"","")
+            if(title.isNotBlank() && description.isNotBlank() && !selectedPhoto.toString().isNullOrBlank() && !selectedVideo.toString().isNullOrBlank()){
+                viewModel.uploadVideoAndImage(video,selectedVideo, selectedPhoto)
+            }else{
+                Toast.makeText(context,"Try Fill All Details or files",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

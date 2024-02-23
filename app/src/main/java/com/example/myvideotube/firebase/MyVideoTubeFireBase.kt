@@ -1,8 +1,13 @@
 package com.example.myvideotube.firebase
 
+import android.net.Uri
 import android.util.Log
 import com.example.myvideotube.data.User
+import com.example.myvideotube.data.Video
+import com.example.myvideotube.path.FIRESTORAGE_PHOTO
+import com.example.myvideotube.path.FIRESTORAGE_VIDEO
 import com.example.myvideotube.path.FIRESTORE_USER
+import com.example.myvideotube.path.FIRESTORE_VIDEOS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -36,6 +41,29 @@ class MyVideoTubeFireBase @Inject constructor(
                     Log.e("saveUser","${it.exception?.message}")
                 }
             }
+    }
+
+    fun uploadVideoAndImage(videoData: Video, selectedVideo:Uri,selectedPhoto: Uri){
+        firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).putFile(selectedVideo).addOnSuccessListener {videotask->
+            firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).downloadUrl.addOnSuccessListener {videoUrl->
+                firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).putFile(selectedPhoto).addOnCompleteListener{
+                    if (it.isSuccessful){
+                        val photoUrl = firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).downloadUrl.addOnSuccessListener{photoUrl->
+                            val video = Video(videoData.title,videoData.description,videoData.videoID,null,photoUrl.toString(),videoUrl.toString())
+                            saveVideo(video)
+                        }
+
+                    }
+                }.addOnFailureListener{
+                    Log.d("uploadVideo","${it.message}")
+                }
+            }
+
+        }
+    }
+
+    fun saveVideo(video: Video){
+        fireStore.collection(FIRESTORE_VIDEOS).document(video.videoID).set(video)
     }
 
 }
