@@ -3,6 +3,7 @@ package com.example.myvideotube.firebase
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.asLiveData
 import com.example.myvideotube.data.User
 import com.example.myvideotube.data.Video
 import com.example.myvideotube.path.FIRESTORAGE_PHOTO
@@ -11,7 +12,12 @@ import com.example.myvideotube.path.FIRESTORE_USER
 import com.example.myvideotube.path.FIRESTORE_VIDEOS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.dataObjects
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
@@ -52,6 +58,9 @@ class MyVideoTubeFireBase @Inject constructor(
                         val photoUrl = firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).downloadUrl.addOnSuccessListener{photoUrl->
                             val video = Video(videoData.title,videoData.description,videoData.videoID,null,photoUrl.toString(),videoUrl.toString())
                             saveVideo(video)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                updateCurrentUserData(video)
+                            }
                             sendNotification(0,0,"Upload Completed")
                         }
 
@@ -71,5 +80,35 @@ class MyVideoTubeFireBase @Inject constructor(
     fun saveVideo(video: Video){
         fireStore.collection(FIRESTORE_VIDEOS).document(video.videoID).set(video)
     }
+
+    fun updateCurrentUserData(video: Video) {
+        val uid = firebaseAuth.uid.toString()
+        var user :User? = null
+        if (uid != null) {
+            fireStore.collection(FIRESTORE_USER).document(uid).get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    user = it.result.toObject(User::class.java)
+                    if (user!=null){
+                        if(user?.videos ==null){
+                            user?.videos = mutableListOf(video)
+                            Log.e("UpdateUser","SucessFull ${user.toString()}")
+                            saveUserData(user!!)
+                        }else{
+                            user?.videos!!.add(video)
+                            saveUserData(user!!)
+                        }
+                    }
+                    Log.e("UpdateUser","SucessFull ${user.toString()}${video.toString()}")
+                }else{
+                    Log.e("UpdateUser","${it.exception?.message}")
+                }
+
+            }
+        }
+
+
+    }
+
+
 
 }

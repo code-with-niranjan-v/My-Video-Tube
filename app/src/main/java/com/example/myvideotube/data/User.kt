@@ -1,10 +1,10 @@
 package com.example.myvideotube.data
 
 data class User(
-    val channelName:String,
-    val userID:String,
-    val email:String,
-    val subscribers:List<User>?,
-    val subscribing:List<User>?,
-    val videos:List<Video>?
+    val channelName:String = "",
+    val userID:String = "",
+    val email:String = "",
+    val subscribers:MutableList<User>? = mutableListOf(),
+    val subscribing:MutableList<User>? = mutableListOf(),
+    var videos:MutableList<Video>? = mutableListOf()
 )
