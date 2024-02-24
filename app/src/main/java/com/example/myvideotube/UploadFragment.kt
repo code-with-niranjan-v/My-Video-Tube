@@ -1,6 +1,12 @@
 package com.example.myvideotube
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context.NOTIFICATION_SERVICE
 import android.net.Uri
+import androidx.core.app.NotificationCompat
+import android.os.Build
+import android.os.Build.VERSION
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +28,8 @@ class UploadFragment : Fragment() {
     private lateinit var uploadBinding: FragmentUploadBinding
     private lateinit var selectedVideo: Uri
     private lateinit var selectedPhoto: Uri
+    private val CHANNEL_ID = "VideoUpload123"
+    private val notificationId = 1234
     private val viewModel:MyVideoTubeViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,11 +71,41 @@ class UploadFragment : Fragment() {
             val videoID = UUID.randomUUID().toString()
             val video = Video(title,description,videoID,null,"","")
             if(title.isNotBlank() && description.isNotBlank() && !selectedPhoto.toString().isNullOrBlank() && !selectedVideo.toString().isNullOrBlank()){
-                viewModel.uploadVideoAndImage(video,selectedVideo, selectedPhoto)
+                createNotificationChannel()
+                sendNotification(0,100,"Video Uploading")
+                viewModel.uploadVideoAndImage(video,selectedVideo, selectedPhoto,sendNotification)
             }else{
                 Toast.makeText(context,"Try Fill All Details or files",Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+    fun createNotificationChannel(){
+        if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Video Upload"
+            val descriptionText = "VideoUpload"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+            mChannel.description = descriptionText
+            val notificationManager = requireContext().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
+    }
+
+    var sendNotification = {progressNow:Int,progressMax:Int,text:String ->
+        val build = NotificationCompat.Builder(requireContext(),CHANNEL_ID)
+            .setContentTitle("Video Upload")
+            .setContentText(text)
+            .setSmallIcon(R.drawable.baseline_cloud_upload_24)
+            .setSilent(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+
+        val notificationManager = requireContext().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        build.setProgress(progressMax,progressNow, false)
+        notificationManager.notify(notificationId,build.build())
+
+
     }
 
 

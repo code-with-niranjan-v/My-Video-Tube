@@ -8,8 +8,8 @@ class MyVideoTubeRepository(
     private val fireBase: MyVideoTubeFireBase
 ) {
 
-    fun uploadVideoAndImage(videoData: Video, selectedVideo: Uri, selectedPhoto: Uri){
-        fireBase.uploadVideoAndImage(videoData, selectedVideo, selectedPhoto)
+    fun uploadVideoAndImage(videoData: Video, selectedVideo: Uri, selectedPhoto: Uri,sendNotification:(Int,Int,String)->Unit){
+        fireBase.uploadVideoAndImage(videoData, selectedVideo, selectedPhoto,sendNotification)
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.myvideotube.firebase
 
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import com.example.myvideotube.data.User
 import com.example.myvideotube.data.Video
 import com.example.myvideotube.path.FIRESTORAGE_PHOTO
@@ -43,7 +44,7 @@ class MyVideoTubeFireBase @Inject constructor(
             }
     }
 
-    fun uploadVideoAndImage(videoData: Video, selectedVideo:Uri,selectedPhoto: Uri){
+    fun uploadVideoAndImage(videoData: Video, selectedVideo:Uri,selectedPhoto: Uri,sendNotification:(Int,Int,String)->Unit){
         firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).putFile(selectedVideo).addOnSuccessListener {videotask->
             firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).downloadUrl.addOnSuccessListener {videoUrl->
                 firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).putFile(selectedPhoto).addOnCompleteListener{
@@ -51,14 +52,19 @@ class MyVideoTubeFireBase @Inject constructor(
                         val photoUrl = firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).downloadUrl.addOnSuccessListener{photoUrl->
                             val video = Video(videoData.title,videoData.description,videoData.videoID,null,photoUrl.toString(),videoUrl.toString())
                             saveVideo(video)
+                            sendNotification(0,0,"Upload Completed")
                         }
 
                     }
                 }.addOnFailureListener{
                     Log.d("uploadVideo","${it.message}")
+                    sendNotification(0,0,it.message.toString())
                 }
             }
 
+        }.addOnProgressListener {
+            val progress = ((100*it.bytesTransferred)/it.totalByteCount).toInt()
+            sendNotification(progress,100,"Video Uploading..")
         }
     }
 
