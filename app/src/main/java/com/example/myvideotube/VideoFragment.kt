@@ -1,21 +1,54 @@
 package com.example.myvideotube
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myvideotube.databinding.FragmentVideoBinding
+import com.example.myvideotube.ui.fragmentUtils.VideoAdapter
+import com.example.myvideotube.ui.fragmentUtils.VideoListener
+import com.example.myvideotube.viewmodel.MyVideoTubeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class VideoFragment : Fragment(),VideoListener {
 
-class VideoFragment : Fragment() {
-
+    private lateinit var videoBinding: FragmentVideoBinding
+    private val viewModel: MyVideoTubeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_video, container, false)
+        videoBinding = FragmentVideoBinding.inflate(layoutInflater,container,false)
+        return videoBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loadAllVideo()
+
+        viewModel.listOfVideos.observe(viewLifecycleOwner){
+            Log.e("VideoLoading1",it.toString())
+            val adapter = VideoAdapter(it,requireContext(),this)
+            videoBinding.videoRV.layoutManager = LinearLayoutManager(requireContext())
+            videoBinding.videoRV.adapter = adapter
+        }
+
+
+    }
+
+    override fun onCLick() {
+        val navController = Navigation.findNavController(requireActivity(),R.id.homeContainer)
+        navController.navigate(R.id.action_videoFragment2_to_videoViewFragment2)
     }
 
 

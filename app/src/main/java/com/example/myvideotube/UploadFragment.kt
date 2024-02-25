@@ -19,6 +19,8 @@ import androidx.fragment.app.viewModels
 import com.example.myvideotube.data.Video
 import com.example.myvideotube.databinding.FragmentUploadBinding
 import com.example.myvideotube.viewmodel.MyVideoTubeViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 

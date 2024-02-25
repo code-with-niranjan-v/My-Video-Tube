@@ -8,8 +8,13 @@ class MyVideoTubeRepository(
     private val fireBase: MyVideoTubeFireBase
 ) {
 
+    val listOfVideo:MutableList<Video> = mutableListOf()
     fun uploadVideoAndImage(videoData: Video, selectedVideo: Uri, selectedPhoto: Uri,sendNotification:(Int,Int,String)->Unit){
-        fireBase.uploadVideoAndImage(videoData, selectedVideo, selectedPhoto,sendNotification)
+        fireBase.UploadVideoWithUser(videoData, selectedVideo, selectedPhoto,sendNotification)
+    }
+
+    suspend fun loadAllVideo():MutableList<Video>{
+        return fireBase.loadAllVideos()
     }
 
 }

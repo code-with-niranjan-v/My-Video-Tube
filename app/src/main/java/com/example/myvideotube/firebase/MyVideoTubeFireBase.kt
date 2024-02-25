@@ -13,6 +13,7 @@ import com.example.myvideotube.path.FIRESTORE_VIDEOS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.dataObjects
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -107,6 +108,54 @@ class MyVideoTubeFireBase @Inject constructor(
         }
 
 
+    }
+
+
+    fun UploadVideoWithUser(videoData: Video, selectedVideo:Uri,selectedPhoto: Uri,sendNotification:(Int,Int,String)->Unit){
+        firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).putFile(selectedVideo).addOnSuccessListener {videotask->
+            firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).downloadUrl.addOnSuccessListener {videoUrl->
+                firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).putFile(selectedPhoto).addOnCompleteListener{
+                    if (it.isSuccessful){
+                        val photoUrl = firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).downloadUrl.addOnSuccessListener{photoUrl->
+                            val uid = firebaseAuth.uid.toString()
+                            fireStore.collection(FIRESTORE_USER).document(uid).get().addOnCompleteListener {userTask->
+                                if(userTask.isSuccessful){
+                                    val userData = userTask.result.toObject(User::class.java)
+                                    val video = Video(videoData.title,videoData.description,videoData.videoID,null,photoUrl.toString(),videoUrl.toString(),uid = uid, channelName = userData?.channelName?:"Channel Not Named")
+                                    saveVideo(video)
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        updateCurrentUserData(video)
+                                    }
+                                    sendNotification(0,0,"Upload Completed")
+                                }
+                            }
+                        }
+
+                    }
+                }.addOnFailureListener{
+                    Log.d("uploadVideo","${it.message}")
+                    sendNotification(0,0,it.message.toString())
+                }
+            }
+
+        }.addOnProgressListener {
+            val progress = ((100*it.bytesTransferred)/it.totalByteCount).toInt()
+            sendNotification(progress,100,"Video Uploading..")
+        }
+    }
+
+    suspend fun loadAllVideos():MutableList<Video>{
+        val listOfVideos:MutableList<Video> = mutableListOf()
+        fireStore.collection(FIRESTORE_VIDEOS).get().addOnCompleteListener {
+            if (it.isSuccessful){
+                for (snapShot in it.result){
+                    val video = snapShot.toObject(Video::class.java)
+                    listOfVideos.add(video)
+                }
+            }
+        }.await()
+
+        return listOfVideos
     }
 
 

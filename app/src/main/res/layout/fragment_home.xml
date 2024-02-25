@@ -37,7 +37,7 @@
             android:id="@+id/line"
             app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@color/white"
+            android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

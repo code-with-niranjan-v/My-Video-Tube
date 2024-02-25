@@ -1,6 +1,7 @@
 package com.example.myvideotube.viewmodel
 
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myvideotube.data.User
 import com.example.myvideotube.data.Video
@@ -19,6 +20,7 @@ class MyVideoTubeViewModel @Inject constructor(
     private val repo:MyVideoTubeRepository
 ):ViewModel(){
 
+    val listOfVideos:MutableLiveData<MutableList<Video>> = MutableLiveData()
     fun createUserWithPassword(email:String,password:String,user: User){
         CoroutineScope(Dispatchers.IO).launch {
             firebase.createUserWithPassword(email, password,user)
@@ -33,6 +35,14 @@ class MyVideoTubeViewModel @Inject constructor(
     ){
         CoroutineScope(Dispatchers.IO).launch{
             repo.uploadVideoAndImage(videoData, selectedVideo, selectedPhoto,sendNotification)
+        }
+    }
+
+    fun loadAllVideo(){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            listOfVideos.postValue(repo.loadAllVideo())
+
         }
     }
 
