@@ -51,32 +51,32 @@ class MyVideoTubeFireBase @Inject constructor(
             }
     }
 
-    fun uploadVideoAndImage(videoData: Video, selectedVideo:Uri,selectedPhoto: Uri,sendNotification:(Int,Int,String)->Unit){
-        firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).putFile(selectedVideo).addOnSuccessListener {videotask->
-            firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).downloadUrl.addOnSuccessListener {videoUrl->
-                firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).putFile(selectedPhoto).addOnCompleteListener{
-                    if (it.isSuccessful){
-                        val photoUrl = firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).downloadUrl.addOnSuccessListener{photoUrl->
-                            val video = Video(videoData.title,videoData.description,videoData.videoID,null,photoUrl.toString(),videoUrl.toString())
-                            saveVideo(video)
-                            CoroutineScope(Dispatchers.IO).launch {
-                                updateCurrentUserData(video)
-                            }
-                            sendNotification(0,0,"Upload Completed")
-                        }
-
-                    }
-                }.addOnFailureListener{
-                    Log.d("uploadVideo","${it.message}")
-                    sendNotification(0,0,it.message.toString())
-                }
-            }
-
-        }.addOnProgressListener {
-            val progress = ((100*it.bytesTransferred)/it.totalByteCount).toInt()
-            sendNotification(progress,100,"Video Uploading..")
-        }
-    }
+//    fun uploadVideoAndImage(videoData: Video, selectedVideo:Uri,selectedPhoto: Uri,sendNotification:(Int,Int,String)->Unit){
+//        firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).putFile(selectedVideo).addOnSuccessListener {videotask->
+//            firebaseStorage.reference.child(FIRESTORAGE_VIDEO).child(videoData.videoID).downloadUrl.addOnSuccessListener {videoUrl->
+//                firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).putFile(selectedPhoto).addOnCompleteListener{
+//                    if (it.isSuccessful){
+//                        val photoUrl = firebaseStorage.reference.child(FIRESTORAGE_PHOTO).child(videoData.videoID).downloadUrl.addOnSuccessListener{photoUrl->
+//                            val video = Video(videoData.title,videoData.description,videoData.videoID,null,photoUrl.toString(),videoUrl.toString())
+//                            saveVideo(video)
+//                            CoroutineScope(Dispatchers.IO).launch {
+//                                updateCurrentUserData(video)
+//                            }
+//                            sendNotification(0,0,"Upload Completed")
+//                        }
+//
+//                    }
+//                }.addOnFailureListener{
+//                    Log.d("uploadVideo","${it.message}")
+//                    sendNotification(0,0,it.message.toString())
+//                }
+//            }
+//
+//        }.addOnProgressListener {
+//            val progress = ((100*it.bytesTransferred)/it.totalByteCount).toInt()
+//            sendNotification(progress,100,"Video Uploading..")
+//        }
+//    }
 
     fun saveVideo(video: Video){
         fireStore.collection(FIRESTORE_VIDEOS).document(video.videoID).set(video)
