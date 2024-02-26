@@ -20,7 +20,7 @@ class VideoViewHolder(
             .into(binding.imgVideo)
 
         binding.root.setOnClickListener {
-            listener.onCLick()
+            listener.onCLick(videoData)
         }
     }
 }
@@ -50,5 +50,5 @@ class VideoAdapter(
 }
 
 interface VideoListener{
-    fun onCLick()
+    fun onCLick(videoData: Video)
 }

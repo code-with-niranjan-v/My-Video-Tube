@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myvideotube.data.Video
 import com.example.myvideotube.databinding.FragmentVideoBinding
 import com.example.myvideotube.ui.fragmentUtils.VideoAdapter
 import com.example.myvideotube.ui.fragmentUtils.VideoListener
@@ -46,9 +47,11 @@ class VideoFragment : Fragment(),VideoListener {
 
     }
 
-    override fun onCLick() {
+    override fun onCLick(videoData:Video) {
         val navController = Navigation.findNavController(requireActivity(),R.id.homeContainer)
-        navController.navigate(R.id.action_videoFragment2_to_videoViewFragment2)
+        val bundle = Bundle()
+        bundle.putSerializable("VideoData",videoData)
+        navController.navigate(R.id.action_videoFragment2_to_videoViewFragment2,bundle)
     }
 
 

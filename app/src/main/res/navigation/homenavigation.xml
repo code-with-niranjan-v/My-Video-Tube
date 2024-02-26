@@ -18,7 +18,13 @@
         android:id="@+id/videoViewFragment2"
         android:name="com.example.myvideotube.VideoViewFragment"
         android:label="fragment_video_view"
-        tools:layout="@layout/fragment_video_view" />
+        tools:layout="@layout/fragment_video_view" >
+        <argument
+            android:name="VideoData"
+            app:argType="com.example.myvideotube.data.Video"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment2"
         android:name="com.example.myvideotube.SearchFragment"
