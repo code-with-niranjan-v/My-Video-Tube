@@ -24,6 +24,9 @@
             app:argType="com.example.myvideotube.data.Video"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_videoViewFragment2_to_fullScreenFragment"
+            app:destination="@id/fullScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment2"
@@ -40,4 +43,15 @@
         android:name="com.example.myvideotube.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/fullScreenFragment"
+        android:name="com.example.myvideotube.FullScreenFragment"
+        android:label="fragment_full_screen"
+        tools:layout="@layout/fragment_full_screen" >
+        <argument
+            android:name="VideoData"
+            app:argType="com.example.myvideotube.data.Video"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>
