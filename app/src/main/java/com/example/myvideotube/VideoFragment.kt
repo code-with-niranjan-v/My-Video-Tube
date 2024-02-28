@@ -1,5 +1,7 @@
 package com.example.myvideotube
 
+import android.content.res.ColorStateList
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,10 +37,18 @@ class VideoFragment : Fragment(),VideoListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        videoBinding.circularProgressBar.indeterminateTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(requireContext(),R.color.white))
 
         viewModel.loadAllVideo()
 
+
+
         viewModel.listOfVideos.observe(viewLifecycleOwner){
+            if(!it.isNullOrEmpty()){
+                videoBinding.circularProgressBar.visibility = View.GONE
+                videoBinding.videoLayout.visibility = View.VISIBLE
+            }
             Log.e("VideoLoading1",it.toString())
             val adapter = VideoAdapter(it,requireContext(),this)
             videoBinding.videoRV.layoutManager = LinearLayoutManager(requireContext())
