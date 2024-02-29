@@ -40,6 +40,10 @@ class SignUp : Fragment() {
                 if(password.equals(confirmPassword)){
                     val user = User(channelName,"",email,null,null,null)
                     myVideoTubeViewModel.createUserWithPassword(email, password,user)
+                    signUpBinding.etEmail.text.clear()
+                    signUpBinding.etConfirm.text.clear()
+                    signUpBinding.etChannleName.text.clear()
+                    signUpBinding.etPassword.text.clear()
                 }
             }else{
                 Toast.makeText(context,"Blank Fields are not allowed",Toast.LENGTH_SHORT).show()

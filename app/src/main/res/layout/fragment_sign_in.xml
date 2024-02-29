@@ -96,6 +96,7 @@
                     android:background="@drawable/edit_txt_bg"
                     android:hint="Password"
                     android:padding="18dp"
+                    android:inputType="textPassword"
                     app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
