@@ -4,17 +4,22 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context.NOTIFICATION_SERVICE
 import android.net.Uri
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
 import android.os.Build
 import android.os.Build.VERSION
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.example.myvideotube.data.Video
 import com.example.myvideotube.databinding.FragmentUploadBinding
@@ -43,6 +48,18 @@ class UploadFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ){
+            if (it){
+                Log.e("permissionTag","Permission Granted")
+            }else{
+                Toast.makeText(requireContext(),"Permission Needed For Sending Notification about upload Status",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        askNotificationPermission(requestPermissionLauncher)
 
         val pickVideo = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){
             if(it!=null){
@@ -108,6 +125,16 @@ class UploadFragment : Fragment() {
         notificationManager.notify(notificationId,build.build())
 
 
+    }
+
+    private fun askNotificationPermission(requestPermissionLauncher: ActivityResultLauncher<String>){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
+            if (ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.POST_NOTIFICATIONS)==PackageManager.PERMISSION_GRANTED){
+                Log.e("permissionTag","Permission Granted")
+            }else{
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
 
