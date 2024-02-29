@@ -93,6 +93,9 @@ class UploadFragment : Fragment() {
                 createNotificationChannel()
                 sendNotification(0,100,"Video Uploading")
                 viewModel.uploadVideoAndImage(video,selectedVideo, selectedPhoto,sendNotification)
+                uploadBinding.etTitle.text.clear()
+                uploadBinding.etDescription.text.clear()
+                Toast.makeText(requireContext(),"Uploading Started!",Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(context,"Try Fill All Details or files",Toast.LENGTH_SHORT).show()
             }

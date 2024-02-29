@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.myvideotube.data.Video
 import com.example.myvideotube.databinding.FragmentVideoBinding
 import com.example.myvideotube.ui.fragmentUtils.VideoAdapter
@@ -25,7 +26,7 @@ class VideoFragment : Fragment(),VideoListener {
 
     private lateinit var videoBinding: FragmentVideoBinding
     private val viewModel: MyVideoTubeViewModel by viewModels()
-
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +41,12 @@ class VideoFragment : Fragment(),VideoListener {
         videoBinding.circularProgressBar.indeterminateTintList = ColorStateList.valueOf(
             ContextCompat.getColor(requireContext(),R.color.white))
 
+        swipeRefreshLayout = videoBinding.swipeRefreshLayout
+
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadAllVideo()
+        }
+
         viewModel.loadAllVideo()
 
 
@@ -49,6 +56,7 @@ class VideoFragment : Fragment(),VideoListener {
                 videoBinding.circularProgressBar.visibility = View.GONE
                 videoBinding.videoLayout.visibility = View.VISIBLE
             }
+            swipeRefreshLayout.isRefreshing = false
             Log.e("VideoLoading1",it.toString())
             val adapter = VideoAdapter(it,requireContext(),this)
             videoBinding.videoRV.layoutManager = LinearLayoutManager(requireContext())
