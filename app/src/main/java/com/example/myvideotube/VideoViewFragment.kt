@@ -28,6 +28,7 @@ class VideoViewFragment : Fragment(),VideoListener {
     private lateinit var videoViewBinding:FragmentVideoViewBinding
     private val videoData:VideoViewFragmentArgs by navArgs()
     private lateinit var videoDataNew:Video
+    private var isExpanded:Boolean = false
     private val viewModel:MyVideoTubeViewModel by viewModels()
     private var player:ExoPlayer? = null
     override fun onCreateView(
@@ -44,6 +45,11 @@ class VideoViewFragment : Fragment(),VideoListener {
        videoViewBinding.circularProgressBar.indeterminateTintList = ColorStateList.valueOf(
             ContextCompat.getColor(requireContext(),R.color.white))
 
+        videoViewBinding.imgExpand.setOnClickListener {
+            isExpanded = !isExpanded
+            expandDescription()
+        }
+
         viewModel.loadAllVideo()
         viewModel.listOfVideos.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
@@ -57,6 +63,8 @@ class VideoViewFragment : Fragment(),VideoListener {
             }
         }
             if (videoData.videoData != null) {
+                videoViewBinding.tvDescriptionContent.text = videoData.videoData!!.description
+                videoViewBinding.tvVideoTitle.text = videoData.videoData!!.title
                 Log.e("VideoViewTest", videoData.videoData.toString())
                 player = ExoPlayer.Builder(requireContext()).build()
                 if (player != null) {
@@ -104,6 +112,13 @@ class VideoViewFragment : Fragment(),VideoListener {
 //            navController.navigate(R.id.action_videoFragment2_to_videoViewFragment2, bundle)
 
         }
+
+    private fun expandDescription(){
+        val visibility = if (isExpanded) View.VISIBLE else View.GONE
+        val img = if (isExpanded)ContextCompat.getDrawable(requireContext(),R.drawable.baseline_expand_less_24)  else ContextCompat.getDrawable(requireContext(),R.drawable.baseline_expand_more_24)
+        videoViewBinding.tvDescriptionContent.visibility = visibility
+        videoViewBinding.imgExpand.setImageDrawable(img)
+    }
 
 
 
