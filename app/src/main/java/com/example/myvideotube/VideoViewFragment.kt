@@ -65,6 +65,7 @@ class VideoViewFragment : Fragment(),VideoListener {
             if (videoData.videoData != null) {
                 videoViewBinding.tvDescriptionContent.text = videoData.videoData!!.description
                 videoViewBinding.tvVideoTitle.text = videoData.videoData!!.title
+                videoViewBinding.tvChannelName.text = videoData.videoData!!.channelName
                 Log.e("VideoViewTest", videoData.videoData.toString())
                 player = ExoPlayer.Builder(requireContext()).build()
                 if (player != null) {
