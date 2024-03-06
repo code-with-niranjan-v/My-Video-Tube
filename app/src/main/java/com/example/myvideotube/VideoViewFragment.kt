@@ -107,9 +107,10 @@ class VideoViewFragment : Fragment(),VideoListener {
         }
 
         override fun onCLick(videoData: Video) {
-//            val navController = Navigation.findNavController(requireActivity(), R.id.homeContainer)
-//            val bundle = Bundle()
-//            bundle.putSerializable("VideoData", videoData)
+            val navController = Navigation.findNavController(requireActivity(), R.id.homeContainer)
+            val bundle = Bundle()
+            bundle.putSerializable("VideoData", videoData)
+            navController.navigate(R.id.action_videoViewFragment2_self,bundle)
 //            navController.navigate(R.id.action_videoFragment2_to_videoViewFragment2, bundle)
 
         }

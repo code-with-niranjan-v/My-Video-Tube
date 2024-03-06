@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_videoViewFragment2_to_fullScreenFragment"
             app:destination="@id/fullScreenFragment" />
+        <action
+            android:id="@+id/action_videoViewFragment2_self"
+            app:destination="@id/videoViewFragment2" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment2"
