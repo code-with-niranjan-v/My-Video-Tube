@@ -35,7 +35,11 @@
         android:id="@+id/searchFragment2"
         android:name="com.example.myvideotube.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment2_to_videoViewFragment2"
+            app:destination="@id/videoViewFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/uploadFragment2"
         android:name="com.example.myvideotube.UploadFragment"

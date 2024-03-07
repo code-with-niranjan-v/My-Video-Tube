@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.temporal.TemporalQuery
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +22,7 @@ class MyVideoTubeViewModel @Inject constructor(
 ):ViewModel(){
 
     val listOfVideos:MutableLiveData<MutableList<Video>> = MutableLiveData()
+    val listOfSearchVideo:MutableLiveData<MutableList<Video>> = MutableLiveData()
     fun createUserWithPassword(email:String,password:String,user: User){
         CoroutineScope(Dispatchers.IO).launch {
             firebase.createUserWithPassword(email, password,user)
@@ -43,6 +45,12 @@ class MyVideoTubeViewModel @Inject constructor(
 
             listOfVideos.postValue(repo.loadAllVideo())
 
+        }
+    }
+
+    fun onSearchVideo(query: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            listOfSearchVideo.postValue(repo.onSearchVideo(query))
         }
     }
 

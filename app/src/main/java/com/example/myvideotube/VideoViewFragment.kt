@@ -63,7 +63,7 @@ class VideoViewFragment : Fragment(),VideoListener {
             }
         }
             if (videoData.videoData != null) {
-                videoViewBinding.tvDescriptionContent.text = videoData.videoData!!.description
+//                videoViewBinding.tvDescriptionContent.text = videoData.videoData!!.description
                 videoViewBinding.tvVideoTitle.text = videoData.videoData!!.title
                 videoViewBinding.tvChannelName.text = videoData.videoData!!.channelName
                 Log.e("VideoViewTest", videoData.videoData.toString())
@@ -111,8 +111,6 @@ class VideoViewFragment : Fragment(),VideoListener {
             val bundle = Bundle()
             bundle.putSerializable("VideoData", videoData)
             navController.navigate(R.id.action_videoViewFragment2_self,bundle)
-//            navController.navigate(R.id.action_videoFragment2_to_videoViewFragment2, bundle)
-
         }
 
     private fun expandDescription(){

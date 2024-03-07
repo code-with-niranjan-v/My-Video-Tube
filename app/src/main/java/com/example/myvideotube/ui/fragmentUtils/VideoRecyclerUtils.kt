@@ -26,7 +26,7 @@ class VideoViewHolder(
 }
 
 class VideoAdapter(
-    private val listOfVideo:List<Video>,
+    private val listOfVideo:MutableList<Video>,
     private val context: Context,
     private val listener:VideoListener
 ): Adapter<VideoViewHolder>() {
@@ -44,6 +44,12 @@ class VideoAdapter(
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         holder.bindData(listOfVideo[position],context,listener)
 
+    }
+
+    fun submitList(newList: List<Video>) {
+        listOfVideo.clear()
+        listOfVideo.addAll(newList)
+        notifyDataSetChanged()
     }
 
 

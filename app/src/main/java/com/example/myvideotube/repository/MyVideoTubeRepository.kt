@@ -17,4 +17,6 @@ class MyVideoTubeRepository(
         return fireBase.loadAllVideos()
     }
 
+    suspend fun onSearchVideo(query:String):MutableList<Video> = fireBase.onSearchView(query)
+
 }

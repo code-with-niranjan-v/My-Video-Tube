@@ -159,5 +159,23 @@ class MyVideoTubeFireBase @Inject constructor(
     }
 
 
+    suspend fun onSearchView(query: String): MutableList<Video> {
+        val videosRef = FirebaseFirestore.getInstance().collection(FIRESTORE_VIDEOS)
+        val searchWords = query.trim().split("\\W+".toRegex()).map { it.lowercase() } // Split based on non-word characters
+
+        val querySnapshot = videosRef.get().await()
+
+        val videos = mutableListOf<Video>()
+
+        for (document in querySnapshot) {
+            val video = document.toObject(Video::class.java)
+            if (searchWords.any { word -> video.title.lowercase().contains(word) }) {
+                videos.add(video)
+            }
+        }
+
+        return videos
+    }
+
 
 }
