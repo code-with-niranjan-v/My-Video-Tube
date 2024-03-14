@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         sharedViewModel.hideBottomNavigationBar.observe(viewLifecycleOwner){hide->
             homeBinding.bottomNavigation.visibility = if (hide) View.GONE else View.VISIBLE
         }
-       // val navController = Navigation.findNavController(requireActivity(),R.id.homeContainer)
+        //val navController = Navigation.findNavController(requireActivity(),R.id.homeContainer)
         val navController = childFragmentManager.findFragmentById(R.id.homeContainer)?.findNavController()
         if (navController != null) {
             NavigationUI.setupWithNavController(homeBinding.bottomNavigation,navController)

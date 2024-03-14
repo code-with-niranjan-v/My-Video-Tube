@@ -44,16 +44,18 @@ class SearchFragment : Fragment(),VideoListener {
         searchBinding.rvVideos.adapter = adapter
         searchBinding.searchVideo.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.e("Search1",query.toString())
-                viewModel.onSearchVideo(query.toString())
-                Log.e("Firestore",viewModel.listOfSearchVideo.value.toString())
+                if (query != null) {
+                    if (query.isNotEmpty()){
+                        Log.e("Search1",query.toString())
+                        viewModel.onSearchVideo(query.toString())
+                        Log.e("Firestore",viewModel.listOfSearchVideo.value.toString())
+                    }
+                }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                Log.e("Search1",newText.toString())
-                viewModel.onSearchVideo(newText.toString())
-                return true
+                return false
             }
         })
 

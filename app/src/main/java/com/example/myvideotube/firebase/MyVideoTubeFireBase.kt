@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import com.example.myvideotube.data.User
 import com.example.myvideotube.data.Video
+import com.example.myvideotube.data.VideoTitle
 import com.example.myvideotube.path.FIRESTORAGE_PHOTO
 import com.example.myvideotube.path.FIRESTORAGE_VIDEO
+import com.example.myvideotube.path.FIRESTORE_TITLE
 import com.example.myvideotube.path.FIRESTORE_USER
 import com.example.myvideotube.path.FIRESTORE_VIDEOS
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 import javax.inject.Inject
 
 
@@ -123,6 +126,7 @@ class MyVideoTubeFireBase @Inject constructor(
                                     val userData = userTask.result.toObject(User::class.java)
                                     val video = Video(videoData.title,videoData.description,videoData.videoID,null,photoUrl.toString(),videoUrl.toString(),uid = uid, channelName = userData?.channelName?:"Channel Not Named")
                                     saveVideo(video)
+                                    uploadVideoTitle(VideoTitle(videoData.title, videoId = videoData.videoID))
                                     CoroutineScope(Dispatchers.IO).launch {
                                         updateCurrentUserData(video)
                                     }
@@ -160,7 +164,7 @@ class MyVideoTubeFireBase @Inject constructor(
 
 
     suspend fun onSearchView(query: String): MutableList<Video> {
-        val videosRef = FirebaseFirestore.getInstance().collection(FIRESTORE_VIDEOS)
+        val videosRef = fireStore.collection(FIRESTORE_VIDEOS)
         val searchWords = query.trim().split("\\W+".toRegex()).map { it.lowercase() } // Split based on non-word characters
 
         val querySnapshot = videosRef.get().await()
@@ -176,6 +180,14 @@ class MyVideoTubeFireBase @Inject constructor(
 
         return videos
     }
+
+    fun uploadVideoTitle(data:VideoTitle){
+        val videoTitleRef = fireStore.collection(FIRESTORE_TITLE)
+        videoTitleRef.document(UUID.randomUUID().toString()).set(data).addOnSuccessListener {
+            Log.e("titleLog","Successfull")
+        }
+    }
+
 
 
 }
